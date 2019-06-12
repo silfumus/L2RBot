@@ -233,10 +233,10 @@ namespace L2RBot
 
             if (TopBorder + BottomBorder + LeftBorder + RightBorder != 0)//checks to see if boarders have been assigned values before spamming error.
             {
-                if (Screen.Width != (1280 + RightBorder + LeftBorder) | Screen.Height != (720 + TopBorder + BottomBorder))
+                if (Screen.Width != (960 + RightBorder + LeftBorder) | Screen.Height != (540 + TopBorder + BottomBorder))
                 {
-                    MainWindow.main.UpdateLog = App.MainWindowTitle + " Incorrect game screen size detected. The visible game screen needs to be 1280x720, excluding any borders. Window detected at:" +
-                        width + "x" + height + ". It needs to be " + (1280 + RightBorder + LeftBorder) + "x" + (720 + TopBorder + BottomBorder) +
+                    MainWindow.main.UpdateLog = App.MainWindowTitle + " Incorrect game screen size detected. The visible game screen needs to be 960x540, excluding any borders. Window detected at:" +
+                        width + "x" + height + ". It needs to be " + (960 + RightBorder + LeftBorder) + "x" + (540 + TopBorder + BottomBorder) +
                         ".";
                 }
             }
