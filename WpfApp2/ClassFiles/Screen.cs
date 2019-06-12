@@ -155,7 +155,7 @@ namespace L2RBot
         {
             if (Emu == Emulator.NoxPlayer)
             {
-                TopBorder = 30;
+                TopBorder = 32;
 
                 BottomBorder = 2;
 
