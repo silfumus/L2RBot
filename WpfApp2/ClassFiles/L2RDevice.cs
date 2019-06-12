@@ -54,7 +54,7 @@ namespace L2RBot
             }
             catch (Exception e)
             {
-                MainWindow.main.UpdateLog = "Unable to locate player data";
+                MainWindow.main.UpdateLog = "Unable to locate player data" + e;
             }
 
             //Local filename string split character.
@@ -86,7 +86,7 @@ namespace L2RBot
             }
             catch (Exception e)
             {
-                MainWindow.main.UpdateLog = "Unable to locate player data";
+                MainWindow.main.UpdateLog = "Unable to locate player data" + e;
             }
 
             //Rename file to adb port number.
@@ -100,7 +100,7 @@ namespace L2RBot
             }
             catch (Exception e)
             {
-                MainWindow.main.UpdateLog = "Unable to rename file, file read/write error.";
+                MainWindow.main.UpdateLog = "Unable to rename file, file read/write error." + e;
             }
             if (CharacterName == null)
             {
