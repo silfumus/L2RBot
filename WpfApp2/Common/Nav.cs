@@ -157,11 +157,13 @@ namespace L2RBot.Common
         #endregion
 
 
-        public static Point QuestMenu = new Point(920, 88);
+        public static Point QuestMenu = new Point(695, 60);
 
         #region QuestMenu_SubNav
 
-        public static Point BtnWeekly = new Point(109, 285);
+        public static Point BtnWeekly = new Point(100, 220);
+        public static Point BtnStartWeekly = new Point(700, 310);
+        public static Point BtnWalk = new Point(390, 390);
 
         #endregion      
 
@@ -169,6 +171,6 @@ namespace L2RBot.Common
 
         public static Point MapClose = new Point(1243, 68);
 
-        public static Point AutoCombat = new Point(935, 614);
+        public static Point AutoCombat = new Point(655, 510);
     }
 }
