@@ -412,6 +412,7 @@ namespace L2RBot
 
                 if (p.IsPresent(Screen, Tolerance))
                 {
+                    MainWindow.main.UpdateLog = "Color: " + p.Color;
                     IsFound = true;
 
                     return p;

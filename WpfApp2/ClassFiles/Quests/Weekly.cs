@@ -10,12 +10,12 @@ namespace L2RBot
     public class Weekly : Quest
     {
         //globals
-        private Pixel _weeklySearch;
         private Pixel[] _weeklyComplete;
         private bool _isWeeklyStarted;
 
         public Pixel[] BtnWeeklyComplete => _weeklyComplete ?? (_weeklyComplete = new Pixel[2]);
         public Pixel BtnGo { get; private set; }
+        public Pixel BtnDone { get; private set; }
 
         //constructors
         public Weekly(Process app, L2RDevice adbApp) : base(app, adbApp)
@@ -44,19 +44,24 @@ namespace L2RBot
                 Color = Color.White,
                 Point = new Point(675, 303) // white text on 'Go' button.
             };
+            BtnDone = new Pixel
+            {
+                Color = Color.White,
+                Point = new Point(752, 312) // white text on 'Go' button.
+            };
 
             //All Weekly Quests complete
             BtnWeeklyComplete[0] = new Pixel
             {
-                Color = Color.FromArgb(255, 71, 71, 71),
+                Color = Color.FromArgb(255, 47, 41, 37),
 
-                Point = new Point(844, 490) //Left side of the Q on 'Quest Complete' button.
+                Point = new Point(625, 310) // Background color of 'Quest Complete' button.
             };
             BtnWeeklyComplete[1] = new Pixel
             {
-                Color = Color.FromArgb(255, 21, 26, 37),
+                Color = Color.FromArgb(255, 19, 22, 29),
 
-                Point = new Point(848, 490) //Center blue of the Q on 'Quest Complete' button.
+                Point = new Point(752, 310) //Text color of 'Quest Complete' button.
             };
         }
 
@@ -100,14 +105,30 @@ namespace L2RBot
             Thread.Sleep(TimeSpan.FromSeconds(2));
             Click(Nav.BtnWeekly);
 
+            if (IsWeeklyComplete()) return;
             Thread.Sleep(TimeSpan.FromSeconds(1));
-            Click(Nav.BtnStartWeekly);
+            Click(Nav.BtnWeeklyAction);
 
-            if (IsQuestAccepted() == false)
+            if (IsQuestDoneButtonExist())
+            {
+                MainWindow.main.UpdateLog = "Current quest finished.";
+                if (IsWeeklyComplete())
+                {
+                    MainWindow.main.UpdateLog = "Weekly quests finished.";
+                    CheckCompletion();
+                }
+                else
+                {
+                    MainWindow.main.UpdateLog = "Continuing with next weekly quest.";
+                    Thread.Sleep(TimeSpan.FromSeconds(3));
+                    Click(Nav.BtnWeeklyAction);
+                }
+            }
+            else if (IsQuestAccepted() == false)
             {
                 MainWindow.main.UpdateLog = "Weekly quest is not started yet, starting...";
                 Thread.Sleep(TimeSpan.FromSeconds(1));
-                Click(Nav.BtnStartWeekly);
+                Click(Nav.BtnWeeklyAction);
             }
 
             Thread.Sleep(TimeSpan.FromSeconds(2));
@@ -119,52 +140,65 @@ namespace L2RBot
         }
 
         private bool IsQuestAccepted() => BtnGo.IsPresent(Screen, 4);
+        private bool IsQuestDoneButtonExist() => BtnDone.IsPresent(Screen, 4);
 
         private void IdleCheck()
         {
             MainWindow.main.UpdateLog = "Start idle check.";
-            if (Timer.ElapsedMilliseconds <= IdleTimeInMs || !OnCombatScreen()) return;
-            ResetTimer();
-            StartTimer();
-
-            while (OnCombatScreen() == false)
+            MainWindow.main.UpdateLog = "Time elapsed: " + Timer.ElapsedMilliseconds.ToString();
+            if (Timer.ElapsedMilliseconds > IdleTimeInMs && OnCombatScreen())
             {
-                Helper.Start();
+                ResetTimer();
+                StartTimer();
 
-                if (Timer.ElapsedMilliseconds <= 300000) continue;
-                MainWindow.main.UpdateLog =
-                    BotName + " has ended 'Weekly Quest' due to an unknown pop-up being detected.";
-                Complete = true;
-                break;
-            }
+                while (OnCombatScreen() == false)
+                {
+                    Helper.Start();
 
-            if (OnCombatScreen() == false) return;
-            if (IsWeeklyAvailable())
-            {
-                Click(Nav.AutoCombat);
+                    if (Timer.ElapsedMilliseconds <= 300000) continue;
+                    MainWindow.main.UpdateLog =
+                        BotName + " has ended 'Weekly Quest' due to an unknown pop-up being detected.";
+                    Complete = true;
+                    break;
+                }
 
-                Thread.Sleep(TimeSpan.FromSeconds(1));
-                Click(Nav.AutoCombat);
+                if (OnCombatScreen() == false) return;
+                if (IsQuestDone())
+                {
+                    MainWindow.main.UpdateLog = "Current quest is done.";
+                    OpenQuestPage();
+                    /*
+                    Click(Nav.AutoCombat);
 
-                Thread.Sleep(50);
-                Click(_weeklySearch.Point);
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                    Click(Nav.AutoCombat);
+
+                    Thread.Sleep(50);
+                    Click(_weeklySearch.Point);
+                    */
+                }
+                else
+                {
+                    _isWeeklyStarted = false;
+                }
             }
             else
             {
-                _isWeeklyStarted = false;
+                MainWindow.main.UpdateLog = "Sleeping for 1 minutes.";
+                Thread.Sleep(TimeSpan.FromMinutes(1));
             }
         }
 
-        private bool IsWeeklyAvailable()
+        private bool IsQuestDone()
         {
-            Pixel temp = L2RBot.Screen.SearchPixelVerticalStride(Screen, new Point(8, 150), 180, Colors.WeeklyQuest,
+            Pixel temp = L2RBot.Screen.SearchPixelVerticalStride(Screen, new Point(8, 170), 140, Colors.WeeklyQuest,
                 out bool found, 2);
-            _weeklySearch = found ? temp : new Pixel();
             return found;
         }
 
         private bool IsWeeklyComplete()
         {
+            MainWindow.main.UpdateLog = "Is Quest Complete?";
             return BtnWeeklyComplete[0].IsPresent(Screen, 2) &&
                    BtnWeeklyComplete[1].IsPresent(Screen, 2);
         }

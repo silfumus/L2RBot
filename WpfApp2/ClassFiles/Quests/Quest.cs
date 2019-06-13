@@ -184,7 +184,7 @@ namespace L2RBot
         public void Click(Point GamePoint)
         {
             log.Info("Clicking Point " + GamePoint.ToString());
-
+            MainWindow.main.UpdateLog = "Clicking: " + GamePoint;
             if (Timer.IsRunning)
             {
                 ResetTimer();

@@ -22,7 +22,10 @@ namespace L2RBot
         public bool IsPresent(Rectangle Screen, int Tolerance)
         {
             ScreenObj = new Screen();
-
+            if (Color != ScreenObj.GetColor(Screen, Point.X, Point.Y))
+            {
+                MainWindow.main.UpdateLog = "Expected: " + Color + " Got: " + ScreenObj.GetColor(Screen, Point.X, Point.Y);
+            }
             return L2RBot.Screen.CompareColor(Color, ScreenObj.GetColor(Screen, Point.X, Point.Y), Tolerance);
         }
 

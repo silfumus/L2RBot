@@ -162,7 +162,7 @@ namespace L2RBot.Common
         #region QuestMenu_SubNav
 
         public static Point BtnWeekly = new Point(100, 220);
-        public static Point BtnStartWeekly = new Point(700, 310);
+        public static Point BtnWeeklyAction = new Point(700, 310);
         public static Point BtnWalk = new Point(390, 390);
 
         #endregion      
