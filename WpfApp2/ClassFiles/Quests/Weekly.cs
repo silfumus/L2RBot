@@ -120,7 +120,7 @@ namespace L2RBot
 
         private void _OpenWeeklyQuest()
         {
-            if (IsCombatScreenUp())
+            if (OnCombatScreen())
             {
                 Thread.Sleep(TimeSpan.FromSeconds(1));
 
@@ -139,13 +139,13 @@ namespace L2RBot
 
         private void _IdleCheck()
         {
-            if (Timer.ElapsedMilliseconds > IdleTimeInMs && IsCombatScreenUp())
+            if (Timer.ElapsedMilliseconds > IdleTimeInMs && OnCombatScreen())
             {
                 ResetTimer();
 
                 StartTimer();
 
-                while (!IsCombatScreenUp())
+                while (!OnCombatScreen())
                 {
                     Helper.Start();
                     if (Timer.ElapsedMilliseconds > 300000)//5 minutes
@@ -157,7 +157,7 @@ namespace L2RBot
                         break;
                     }
                 }
-                if (IsCombatScreenUp() && _GrabWeeklyPoint())//Looks to see if [Weekly] is still in the quest options and clicks if it is. 
+                if (OnCombatScreen() && _GrabWeeklyPoint())//Looks to see if [Weekly] is still in the quest options and clicks if it is. 
                 {
                     Click(Nav.AutoCombat);
 
@@ -169,7 +169,7 @@ namespace L2RBot
 
                     Click(_weeklySearch.Point);
                 }
-                if (IsCombatScreenUp() && !_GrabWeeklyPoint())//Looks to see if [Weekly] is still in the quest options
+                if (OnCombatScreen() && !_GrabWeeklyPoint())//Looks to see if [Weekly] is still in the quest options
                 {
                     _iniClick = false;
                 }

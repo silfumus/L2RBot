@@ -385,7 +385,7 @@ namespace L2RBot
         private void OpenHamburger()
         {
             log.Info(BotName + " is looking for the Hamburger button.");
-            if (IsCombatScreenUp() && Hamburger[0].IsPresent(Screen, 15) && !Hamburger[1].IsPresent(Screen, 3))
+            if (OnCombatScreen() && Hamburger[0].IsPresent(Screen, 15) && !Hamburger[1].IsPresent(Screen, 3))
             {
                 Click(Hamburger[0].Point);
             }

@@ -26,7 +26,7 @@ namespace L2RBot
         /// </summary>
         /// <param name="App"></param>
         /// <returns>true: once wifi logo is detected</returns>
-        //public static Boolean IsCombatScreenUp(Process App)
+        //public static Boolean OnCombatScreen(Process App)
         //{
         //    _screenObj = new Screen();
 

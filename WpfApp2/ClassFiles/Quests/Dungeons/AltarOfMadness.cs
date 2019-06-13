@@ -378,7 +378,7 @@ namespace L2RBot
 
             if (_finished == true && _riftMenuOpen == false)
             {
-                if (IsCombatScreenUp())
+                if (OnCombatScreen())
                 {
                     OpenRiftMenu();
                 }
@@ -390,7 +390,7 @@ namespace L2RBot
                 EnterDungeon();
             }
 
-            if (IsCombatScreenUp() && _startQuest == false && _finished == false) //look for combat screen, starts Quest once it is detected.
+            if (OnCombatScreen() && _startQuest == false && _finished == false) //look for combat screen, starts Quest once it is detected.
             {
                 Thread.Sleep(TimeSpan.FromSeconds(1));
                 if (IsRechargeUp())//added it here because of timing issues
@@ -403,7 +403,7 @@ namespace L2RBot
                 _mapPoint.UpdateColor(Screen);
             }
 
-            if (IsCombatScreenUp() && _startQuest == true && _finished == false)
+            if (OnCombatScreen() && _startQuest == true && _finished == false)
             {
                 if (TimeSpan.FromMilliseconds(Timer.ElapsedMilliseconds) > TimeSpan.FromSeconds(15))
                 {
@@ -550,7 +550,7 @@ namespace L2RBot
         /// </summary>
         public void UpdateLeaderStatus()
         {
-            if (IsCombatScreenUp())
+            if (OnCombatScreen())
             {
                 _isLeader = (PartyLeader[0].IsPresent(Screen, 2) && PartyLeader[1].IsPresent(Screen, 2)) ? true : false;
                 MainWindow.main.UpdateLog = BotName + " has been detected as party leader.";
@@ -562,7 +562,7 @@ namespace L2RBot
         /// </summary>
         public void UpdatePartyFullStatus()
         {
-            if (IsCombatScreenUp())
+            if (OnCombatScreen())
             {
                 Click(PartyFull[1].Point);
                 Thread.Sleep(TimeSpan.FromSeconds(.1));

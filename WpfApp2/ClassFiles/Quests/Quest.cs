@@ -134,7 +134,7 @@ namespace L2RBot
             {
                 Color = Colors.WifiLogo,
 
-                Point = new Point(8, 708)
+                Point = new Point(6, 530)
             };
 
             UpdateScreen();
@@ -313,7 +313,7 @@ namespace L2RBot
             Thread.Sleep(50);
         }
 
-        public Boolean IsCombatScreenUp()
+        public Boolean OnCombatScreen()
         {
             return (WifiLogo.IsPresent(Screen, 4)) ? true : false;
         }

@@ -288,7 +288,7 @@ namespace L2RBot
 
         private void OpenHamburger()
         {
-            if (IsCombatScreenUp() && Hamburger[0].IsPresent(Screen, 2) && !Hamburger[1].IsPresent(Screen, 2))
+            if (OnCombatScreen() && Hamburger[0].IsPresent(Screen, 2) && !Hamburger[1].IsPresent(Screen, 2))
             {
                 Click(Hamburger[0].Point);
             }

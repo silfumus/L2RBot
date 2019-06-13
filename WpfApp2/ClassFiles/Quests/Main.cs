@@ -146,7 +146,7 @@ namespace L2RBot
         /// </summary>
         private void InitClick()
         {
-            if (InitialClick == false && IsCombatScreenUp())
+            if (InitialClick == false && OnCombatScreen())
             {
                 log.Info(BotName + " performing initial click");
 
@@ -209,7 +209,7 @@ namespace L2RBot
 
                 StartTimer();
 
-                if (IsCombatScreenUp() && movePixel.IsPresent(Screen, 2))//Looks to see if your map has moved.
+                if (OnCombatScreen() && movePixel.IsPresent(Screen, 2))//Looks to see if your map has moved.
                 {
                     log.Info(BotName + " IdleCheck()-->None movement detected.");
 

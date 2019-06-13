@@ -325,7 +325,7 @@ namespace L2RBot
 
             if (_iniClick == false)
             {
-                if (IsCombatScreenUp())
+                if (OnCombatScreen())
                 {
                     OpenBag();
 
@@ -340,7 +340,7 @@ namespace L2RBot
                     _iniClick = true;
                 }
 
-                if (!IsCombatScreenUp())
+                if (!OnCombatScreen())
                 {
                     Helper.ClosePopUps();
                 }
@@ -392,7 +392,7 @@ namespace L2RBot
 
             log.Info(BotName + " Opening bag.");
 
-            if (IsCombatScreenUp())
+            if (OnCombatScreen())
             {
                 Thread.Sleep(TimeSpan.FromSeconds(1));
 
@@ -598,7 +598,7 @@ namespace L2RBot
         {
             UpdateScreen();
 
-            if (Timer.ElapsedMilliseconds > IdleTimeInMs && IsCombatScreenUp())
+            if (Timer.ElapsedMilliseconds > IdleTimeInMs && OnCombatScreen())
             {
                 log.Info(BotName + " calls IdleCheck()");
 
@@ -606,7 +606,7 @@ namespace L2RBot
 
                 StartTimer();
 
-                while (!IsCombatScreenUp())
+                while (!OnCombatScreen())
                 {
                     UpdateScreen();
 
@@ -624,7 +624,7 @@ namespace L2RBot
                     }
                 }
 
-                if (IsCombatScreenUp() && GrabScrollPoint())//Looks to see if [Sub] is still in the quest options
+                if (OnCombatScreen() && GrabScrollPoint())//Looks to see if [Sub] is still in the quest options
                 {
                     log.Info(BotName + "has detected Scroll Quest in Quest options");
 
@@ -635,7 +635,7 @@ namespace L2RBot
                     Thread.Sleep(TimeSpan.FromSeconds(1));
                 }
 
-                if (IsCombatScreenUp() && !GrabScrollPoint())
+                if (OnCombatScreen() && !GrabScrollPoint())
                 {
                     log.Info(BotName + "Unable to loctate 'Scroll Quest,' iniClick set to false to open quest screen and check for completion.");
                     _iniClick = false;
